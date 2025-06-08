@@ -12,7 +12,7 @@ scripts=$(find ./runs -maxdepth 1 -mindepth 1 -type f -perm +111)
 
 for script in $scripts; do
     if echo "$script" | grep -qv "$filter"; then
-        echo "filtering $script"
+        echo "filtered: $filter -- $script"
         continue
     fi
     
