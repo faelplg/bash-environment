@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-
+# terminal
 brew install --cask ghostty
 brew install tmux
 
+# GitHub CoPilot CLI
 brew install gh
 gh auth login
 gh extension install github/gh-copilot
