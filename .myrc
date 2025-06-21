@@ -1,18 +1,21 @@
 # My personal shell configuration
 
 # PATH
+# ---
 export PATH="$HOME/.local/scripts:$PATH"
 
 # Environment variables
+# ---
 export XDG_CONFIG_HOME="$HOME/.config"
 # export XDG_DATA_HOME="$HOME/.local/share"
 # export XDG_CACHE_HOME="$HOME/.cache"
 # export XDG_STATE_HOME="$HOME/.local/state"
 
 # Aliases
+# ---
 alias ll='ls -la'
-# alias ..='cd ..'
-# alias c='clear'
+alias ..='cd ..'
+alias c='clear'
 # alias h='history'
 # alias v='vim'
 # alias nv='nvim'
@@ -28,22 +31,31 @@ alias ll='ls -la'
 # alias gcm='git commit -m'
 
 # Aliases for tmux
+# ---
 # alias t='tmux'
-# alias tnew='tmux new-session -s'
+alias tnew='tmux new-session -s'
+alias twnew='tmux new-window -n'
+alias tatt='tmux attach'
 # alias tattach='tmux attach-session -t'
 # alias tlist='tmux list-sessions'
-# alias tkill='tmux kill-session -t'
+alias tkill='tmux kill-session -t'
+alias twkill='tmux kill-window -t'
 
 # Aliases for common tasks
+# ---
 # alias install='brew install'
 alias srczsh='source "$HOME/.zshrc"'
+alias srczp='source "$HOME/.zprofile"'
 
 # Aliases for navigation
-# alias home='cd ~'
+# ---
+alias home='cd ~/'
 # alias config='cd "$XDG_CONFIG_HOME"'
 # alias local='cd "$HOME/.local"'
 # alias cache='cd "$XDG_CACHE_HOME"'
 # alias data='cd "$XDG_DATA_HOME"'
 
 # Aliases for development
+# ---
 alias work='cd ~/workspaces'
+alias ghcs='gh copilot suggest'

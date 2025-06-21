@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# terminal
+# brew install --cask ghostty
+# brew install tmux
+
+# GitHub CoPilot CLI
+# brew install gh
+# gh auth login
+# gh extension install github/gh-copilot
+
+# [fzf](https://github.com/junegunn/fzf)
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install

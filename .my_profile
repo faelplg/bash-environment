@@ -1,0 +1,3 @@
+# fzf: see runs/libs
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
