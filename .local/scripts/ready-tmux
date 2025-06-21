@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-if [[ -x ".ready-tmux" ]]; then
-  echo "Running .ready-tmux script in the current directory..."
+echo "Testando ./.ready-tmux: $(ls -l ./.ready-tmux 2>/dev/null)" >&2
+echo "Testando ~/.ready-tmux: $(ls -l ~/.ready-tmux 2>/dev/null)" >&2
+
+if [[ -x ./.ready-tmux ]]; then
   ./.ready-tmux
-elif [[ -x "~/.ready-tmux" ]]; then
-  echo "Running .ready-tmux script in the home directory..."
+elif [[ -x ~/.ready-tmux ]]; then
+  log "Using ~/.ready-tmux script" >&2
   ~/.ready-tmux
 else
   echo "No .ready-tmux script found in the current directory or home directory."

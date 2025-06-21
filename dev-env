@@ -63,3 +63,4 @@ copy_dir .config $XDG_CONFIG_HOME
 copy_dir .local $HOME/.local
 copy_file .my_profile $HOME
 copy_file .myrc $HOME
+copy_file .ready-tmux $HOME

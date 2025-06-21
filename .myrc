@@ -18,7 +18,7 @@ alias ..='cd ..'
 alias c='clear'
 # alias h='history'
 # alias v='vim'
-# alias nv='nvim'
+alias nv='nvim'
 # alias g='git'
 # alias ga='git add'
 # alias gc='git commit'
@@ -32,14 +32,16 @@ alias c='clear'
 
 # Aliases for tmux
 # ---
-# alias t='tmux'
+alias t='tmux'
 alias tnew='tmux new-session -s'
 alias twnew='tmux new-window -n'
-alias tatt='tmux attach'
-# alias tattach='tmux attach-session -t'
-# alias tlist='tmux list-sessions'
-alias tkill='tmux kill-session -t'
-alias twkill='tmux kill-window -t'
+alias tat='tmux attach'
+alias tatt='tmux attach-session -t'
+alias tlist='tmux list-sessions'
+alias tkill='tmux kill-session'
+alias tkillt='tmux kill-session -t'
+alias twkill='tmux kill-window'
+alias twkillt='tmux kill-window -t'
 
 # Aliases for common tasks
 # ---
@@ -59,3 +61,4 @@ alias home='cd ~/'
 # ---
 alias work='cd ~/workspaces'
 alias ghcs='gh copilot suggest'
+alias ghce='gh copilot explain'
