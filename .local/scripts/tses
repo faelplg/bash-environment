@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
-CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-sessionizer/tmux-sessionizer.conf"
-if [[ -f "$CONFIG_FILE" ]]; then
-    source "$CONFIG_FILE"
-fi
-
+# Function: Check if required commands are available
 sanity_check() {
     command -v tmux >/dev/null || { echo "tmux not found"; exit 1; }
     command -v fzf >/dev/null || { echo "fzf not found"; exit 1; }
 }
 
+# Function: Check if a tmux session with the given name exists
 has_session() {
     tmux has-session -t "$1" 2>/dev/null
 }
 
+# Function: Attach or switch to a tmux session, depending on whether we're already inside tmux
 switch_to() {
     if [[ -z "$TMUX" ]]; then
         exec tmux attach-session -t "$1"
@@ -22,6 +20,7 @@ switch_to() {
     fi
 }
 
+# Function: If a .ready-tmux script exists in the selected directory or home, run it in the session
 hydrate() {
     if [[ -x "$2/.ready-tmux" ]]; then
         tmux send-keys -t "$1" "$2/.ready-tmux" C-m
@@ -30,17 +29,24 @@ hydrate() {
     fi
 }
 
+# Run the sanity check to ensure tmux and fzf are installed
 sanity_check
 
+# Set the array of directories to search for projects
 SEARCH_PATHS=(~/workspaces)
+
+# Use fzf to interactively select a directory from SEARCH_PATHS
 selected=$(find "${SEARCH_PATHS[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
 [[ -z "$selected" ]] && exit 0
 
+# Generate a session name from the selected directory's name
 selected_name=$(basename "$selected" | tr ".,: " "____")
 
+# If the session doesn't exist, create it and run hydrate
 if ! has_session "$selected_name"; then
     tmux new-session -ds "$selected_name" -c "$selected"
     hydrate "$selected_name" "$selected"
 fi
 
+# Attach or switch to the tmux session
 switch_to "$selected_name"
