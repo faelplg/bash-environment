@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+command -v fzf >/dev/null 2>&1 || { echo "fzf not found"; exit 1; }
+command -v tmux >/dev/null 2>&1 || { echo "tmux not found"; exit 1; }
+
+selected=$(find ~/workspaces -mindepth 1 -maxdepth 1 -type d | fzf)
+
+if [[ -z "$selected" ]]; then
+	echo "No selection made." >&2
+	exit 0
+fi
+
+# Prevents issues if the directory name starts with a dash
+selected_name=$(basename -- "$selected" | tr ".,: " "____")
+
+switch_or_attach_tmux() {
+    if [[ -z "$TMUX" ]]; then
+        exec tmux attach-session -t "$selected_name"
+    else
+        tmux switch-client -t "$selected_name"
+    fi
+}
+
+if tmux has-session -t="$selected_name" 2>/dev/null; then
+    switch_or_attach_tmux
+    exit 0
+fi
+
+tmux new-session -ds "$selected_name" -c "$selected"
+switch_or_attach_tmux
+tmux send-keys -t "$selected_name" "ready-tmux" C-m

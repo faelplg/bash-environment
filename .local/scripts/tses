@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-sessionizer/tmux-sessionizer.conf"
+if [[ -f "$CONFIG_FILE" ]]; then
+    source "$CONFIG_FILE"
+fi
+
+sanity_check() {
+    command -v tmux >/dev/null || { echo "tmux not found"; exit 1; }
+    command -v fzf >/dev/null || { echo "fzf not found"; exit 1; }
+}
+
+has_session() {
+    tmux has-session -t "$1" 2>/dev/null
+}
+
+switch_to() {
+    if [[ -z "$TMUX" ]]; then
+        exec tmux attach-session -t "$1"
+    else
+        tmux switch-client -t "$1"
+    fi
+}
+
+hydrate() {
+    if [[ -x "$2/.ready-tmux" ]]; then
+        tmux send-keys -t "$1" "$2/.ready-tmux" C-m
+    elif [[ -x "$HOME/.ready-tmux" ]]; then
+        tmux send-keys -t "$1" "$HOME/.ready-tmux" C-m
+    fi
+}
+
+sanity_check
+
+SEARCH_PATHS=(~/workspaces)
+selected=$(find "${SEARCH_PATHS[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
+[[ -z "$selected" ]] && exit 0
+
+selected_name=$(basename "$selected" | tr ".,: " "____")
+
+if ! has_session "$selected_name"; then
+    tmux new-session -ds "$selected_name" -c "$selected"
+    hydrate "$selected_name" "$selected"
+fi
+
+switch_to "$selected_name"
