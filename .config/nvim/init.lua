@@ -16,6 +16,16 @@ vim.o.number = true
 -- option above, see `:h number_relativenumber`
 vim.o.relativenumber = true
 
+-- Indentation settings
+-- Use spaces instead of tabs
+-- 02 spaces to use for each step of indent
+-- 02 spaces that a <Tab> in the file counts for
+-- 02 spaces a <Tab> counts for while editing
+vim.o.expandtab = true
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
+
 -- Sync clipboard between OS and Neovim. Schedule the setting after `UiEnter` because it can
 -- increase startup-time. Remove this option if you want your OS clipboard to remain independent.
 -- See `:help 'clipboard'`
